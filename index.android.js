@@ -9,10 +9,17 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  NativeModules
 } from 'react-native';
 
+const { PresenceTest } = NativeModules;
+
 export default class FirebasePresenceTest extends Component {
+  componentDidMount() {
+    PresenceTest.monitorPresence();
+    PresenceTest.monitorData();
+  }
   render() {
     return (
       <View style={styles.container}>
