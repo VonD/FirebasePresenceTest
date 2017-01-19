@@ -11,8 +11,30 @@ import {
   Text,
   View
 } from 'react-native';
+import firebase from 'firebase';
+
+firebase.initializeApp({
+  apiKey: "AIzaSyCJV6dO5DLp9ynqEgrXM41-A-ymJS8gBmM",
+  authDomain: "p-playground.firebaseapp.com",
+  databaseURL: "https://p-playground.firebaseio.com",
+  storageBucket: "p-playground.appspot.com",
+  messagingSenderId: "303420153696"
+});
+
+const database = firebase.database();
+firebase.database.enableLogging(true);
 
 export default class FirebasePresenceTest extends Component {
+  componentWillMount() {
+    console.log('Attaching presence event listener');
+    database.ref('.info/connected').on('value', snapshot => {
+      console.log(`Connected to Firebase: ${ snapshot.val() }`);
+    });
+    console.log('Attaching data event listener');
+    database.ref('test').on('value', snapshot => {
+      console.log(`Test data: ${ snapshot.val() }`);
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
